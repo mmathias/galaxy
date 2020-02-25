@@ -1,11 +1,18 @@
+package romanNumerals;
+
 import java.util.Collections;
 import java.util.List;
 
-public class L implements Symbol {
+public class V extends RomanNumeral {
 
     @Override
     public int getValue() {
-        return 50;
+        return 5;
+    }
+
+    @Override
+    public Character getSymbol() {
+        return 'V';
     }
 
     @Override

@@ -1,21 +1,27 @@
-import java.util.Arrays;
+package romanNumerals;
+
 import java.util.Collections;
 import java.util.List;
 
-public class X implements Symbol {
+public class L extends RomanNumeral {
 
     @Override
     public int getValue() {
-        return 10;
+        return 50;
+    }
+
+    @Override
+    public Character getSymbol() {
+        return 'L';
     }
 
     @Override
     public boolean isRepeatable() {
-        return true;
+        return false;
     }
 
     @Override
     public List<Character> getSymbolsThatCanComeAfter() {
-        return Arrays.asList('I', 'V', 'L', 'C');
+        return Collections.emptyList();
     }
 }

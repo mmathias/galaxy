@@ -1,12 +1,18 @@
+package romanNumerals;
+
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-public class C implements Symbol {
+public class I extends RomanNumeral {
 
     @Override
     public int getValue() {
-        return 100;
+        return 1;
+    }
+
+    @Override
+    public Character getSymbol() {
+        return 'I';
     }
 
     @Override
@@ -16,6 +22,6 @@ public class C implements Symbol {
 
     @Override
     public List<Character> getSymbolsThatCanComeAfter() {
-        return Arrays.asList('I', 'V', 'X', 'L', 'D', 'M');
+        return Arrays.asList('V', 'X');
     }
 }

@@ -1,16 +1,23 @@
+package romanNumerals;
+
 import java.util.Collections;
 import java.util.List;
 
-public class V implements Symbol {
+public class M extends RomanNumeral {
 
     @Override
     public int getValue() {
-        return 5;
+        return 1000;
+    }
+
+    @Override
+    public Character getSymbol() {
+        return 'M';
     }
 
     @Override
     public boolean isRepeatable() {
-        return false;
+        return true;
     }
 
     @Override

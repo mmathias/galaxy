@@ -1,150 +1,148 @@
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 
-public class NumberParserTest {
+public class RomanNumeralConverterTest {
 
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
 
     @Test
     public void testSingleValues() {
-        assertEquals(1, NumberParser.toValue("I"));
-        assertEquals(5, NumberParser.toValue("V"));
-        assertEquals(10, NumberParser.toValue("X"));
-        assertEquals(50, NumberParser.toValue("L"));
-        assertEquals(100, NumberParser.toValue("C"));
-        assertEquals(500, NumberParser.toValue("D"));
-        assertEquals(1000, NumberParser.toValue("M"));
+        assertEquals(1, RomanNumeralConverter.toValue("I"));
+        assertEquals(5, RomanNumeralConverter.toValue("V"));
+        assertEquals(10, RomanNumeralConverter.toValue("X"));
+        assertEquals(50, RomanNumeralConverter.toValue("L"));
+        assertEquals(100, RomanNumeralConverter.toValue("C"));
+        assertEquals(500, RomanNumeralConverter.toValue("D"));
+        assertEquals(1000, RomanNumeralConverter.toValue("M"));
     }
 
     @Test
     public void testRepeatableValues() {
-        assertEquals(2, NumberParser.toValue("II"));
-        assertEquals(20, NumberParser.toValue("XX"));
-        assertEquals(200, NumberParser.toValue("CC"));
-        assertEquals(2000, NumberParser.toValue("MM"));
+        assertEquals(2, RomanNumeralConverter.toValue("II"));
+        assertEquals(20, RomanNumeralConverter.toValue("XX"));
+        assertEquals(200, RomanNumeralConverter.toValue("CC"));
+        assertEquals(2000, RomanNumeralConverter.toValue("MM"));
     }
 
     @Test
     public void testNonRepeatableValues() {
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't repeat V");
-        NumberParser.toValue("VV");
+        RomanNumeralConverter.toValue("VV");
 
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't repeat L");
-        NumberParser.toValue("LL");
+        RomanNumeralConverter.toValue("LL");
 
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't repeat D");
-        NumberParser.toValue("DD");
+        RomanNumeralConverter.toValue("DD");
     }
 
     @Test
     public void testSubtractionUsingI() {
-        assertEquals(4, NumberParser.toValue("IV"));
-        assertEquals(9, NumberParser.toValue("IX"));
+        assertEquals(4, RomanNumeralConverter.toValue("IV"));
+        assertEquals(9, RomanNumeralConverter.toValue("IX"));
 
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use I before L");
-        NumberParser.toValue("IL");
+        RomanNumeralConverter.toValue("IL");
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use I before C");
-        NumberParser.toValue("IC");
+        RomanNumeralConverter.toValue("IC");
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use I before D");
-        NumberParser.toValue("ID");
+        RomanNumeralConverter.toValue("ID");
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use I before M");
-        NumberParser.toValue("IM");
+        RomanNumeralConverter.toValue("IM");
     }
 
     @Test
     public void testSubtractionUsingV() {
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use V before X");
-        NumberParser.toValue("VX");
+        RomanNumeralConverter.toValue("VX");
 
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use V before L");
-        NumberParser.toValue("VL");
+        RomanNumeralConverter.toValue("VL");
 
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use V before C");
-        NumberParser.toValue("VC");
+        RomanNumeralConverter.toValue("VC");
 
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use V before D");
-        NumberParser.toValue("VD");
+        RomanNumeralConverter.toValue("VD");
 
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use V before M");
-        NumberParser.toValue("VM");
+        RomanNumeralConverter.toValue("VM");
     }
 
     @Test
     public void testSubtractionUsingX() {
-        assertEquals(40, NumberParser.toValue("XL"));
-        assertEquals(90, NumberParser.toValue("XC"));
+        assertEquals(40, RomanNumeralConverter.toValue("XL"));
+        assertEquals(90, RomanNumeralConverter.toValue("XC"));
 
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use X before D");
-        NumberParser.toValue("XD");
+        RomanNumeralConverter.toValue("XD");
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use X before M");
-        NumberParser.toValue("XM");
+        RomanNumeralConverter.toValue("XM");
     }
 
     @Test
     public void testSubtractionUsingL() {
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use L before C");
-        NumberParser.toValue("LC");
+        RomanNumeralConverter.toValue("LC");
 
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use L before D");
-        NumberParser.toValue("LD");
+        RomanNumeralConverter.toValue("LD");
 
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("You can't use L before M");
-        NumberParser.toValue("LM");
+        RomanNumeralConverter.toValue("LM");
     }
 
     @Test
     public void testSubtractionUsingC() {
-        assertEquals(400, NumberParser.toValue("CD"));
-        assertEquals(900, NumberParser.toValue("CM"));
+        assertEquals(400, RomanNumeralConverter.toValue("CD"));
+        assertEquals(900, RomanNumeralConverter.toValue("CM"));
     }
 
     @Test
     public void testIII() {
-        int value = NumberParser.toValue("III");
+        int value = RomanNumeralConverter.toValue("III");
 
         assertEquals(3, value);
     }
 
     @Test
-    @Ignore
     public void testIIII() {
-        exceptionRule.expect(Exception.class);
-        exceptionRule.expectMessage("You can't repeat I 4 times");
-        NumberParser.toValue("IIII");
+        exceptionRule.expect(RuntimeException.class);
+        exceptionRule.expectMessage("You can't repeat I more than 3 times in a row");
+        RomanNumeralConverter.toValue("IIII");
     }
 
     @Test
     public void testXCV() {
-        int value = NumberParser.toValue("XCV");
+        int value = RomanNumeralConverter.toValue("XCV");
 
         assertEquals(95, value);
     }
 
     @Test
     public void testXXXIX() {
-        int value = NumberParser.toValue("XXXIX");
+        int value = RomanNumeralConverter.toValue("XXXIX");
 
         assertEquals(39, value);
     }
